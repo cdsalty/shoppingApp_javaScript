@@ -35,11 +35,24 @@ function updatedCartTotal() {
     // assign varaible to the cartRow iteration
     let cartRow = cartRows[i];
     // will need to get cart price that has a class of 'cart-price' and the first one listed
+    // or I thought of as...
+    // on each cartRow get the class of cart-price and access the first element; priceElement = the $9.99 input in html
     let priceElement = cartRow.getElementsByClassName("cart-price")[0];
     // get quanity by assigning variable to cart-quanity-level class
     let quanityElement = cartRow.getElementsByClassName(
       "cart-quantity-input"
     )[0];
-    console.log(priceElement, quanityElement);
+    /* 
+    STEPS: (to retrieve the number being entered such as 9.99 from the HTML doc)
+      - assign a variable to the price elemnent in the HTML
+      - remove '$' from '$9.99' -- replace()
+      - change the innerText of 9.99 from a string to a number -- parseFloat()
+      - limit the decimal positions to two.
+    */
+    let price = parseFloat(priceElement.innerText.replace("$", ""));
+    console.log(price);
+    let quanity = quanityElement.value;
+    console.log(quanity);
+    console.log(price * quanity);
   }
 }
