@@ -9,20 +9,46 @@
 
 */
 
+// BUTTONS/INPUTS: REMOVE, QUANTITY INPUT BOX,
+
 // Remove Button
 const removeCartItemButtons = document.querySelectorAll(".btn-danger");
 // console.log(removeCartItemButtons);
 for (let i = 0; i < removeCartItemButtons.length; i++) {
   // create variable to represent each element in the loop
   let button = removeCartItemButtons[i];
-  button.addEventListener("click", function(event) {
-    // console.log("button clicked");  verifying each button clicked
-    // make the remove button actually remove the cart item from the cart
-    let buttonClicked = event.target; // all event listeners carry the event object (the button will be the event)
-    // remove the row when the button is clicked.
-    buttonClicked.parentElement.parentElement.remove(); // removing the row by reaching the parent's parents
-    updatedCartTotal();
-  });
+  button.addEventListener("click", removeCartItem);
+  // console.log("button clicked");  verifying each button clicked);
+}
+
+// QUANTITY INPUT BOX
+const quantityInputs = document.querySelectorAll(".cart-quantity-input");
+
+for (let i = 0; i < quantityInputs.length; i++) {
+  // create a variable to be used to iterate through
+  let input = quantityInputs[i];
+  // create an event listener to listen for a 'CHANGE'
+  input.addEventListener("change", quantityChanged);
+  // now go and define what actions will take place when quantityChanged is called
+}
+
+// 3rd Step Taken: Cleaning up the code by creating a removeCartItem Function
+// replaced the original code on the event listner into this function.
+function removeCartItem(event) {
+  // make the remove button actually remove the cart item from the cart
+  let buttonClicked = event.target; // all event listeners carry the event object (the button will be the event)
+  // remove the row when the button is clicked.
+  buttonClicked.parentElement.parentElement.remove(); // removing the row by reaching the parent's parents
+  updatedCartTotal();
+}
+
+// Define quantityChanged function called from Quantity Box
+function quantityChanged(event) {
+  let input = event.target;
+  if (isNaN(input.value) || input.value <= 0) {
+    input.value = 1;
+  }
+  updatedCartTotal();
 }
 
 // Update Total Cost
@@ -61,10 +87,11 @@ function updatedCartTotal() {
     // total = total + (price  *  quanity)
     total = total + price * quanity; // will take place each time through the loop.
     //  ** must initalize total and set starting value to 0 ** I OVERLOOKED THIS ! ! ! ! !
-
-    console.log(total + price * quanity);
-    // refer back to the html to determine we need to target the class, "cart-total-price"
+    console.log(
+      `Just removed ${total + price * quanity} from the shopping cart.`
+    );
   }
+  // refered back to the html to determine we need to target the class, "cart-total-price"
   document.getElementsByClassName("cart-total-price")[0].innerText =
     "$" + total;
 }

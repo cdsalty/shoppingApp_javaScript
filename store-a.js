@@ -14,13 +14,33 @@ for (let i = 0; i < removeCartItemButtons.length; i++) {
     updatedCartTotal();
   });*/
 }
+
+// Quantity Input Box
+const quantityInputs = document.querySelectorAll(".cart-quantity-input");
+
+for (let i = 0; i < quantityInputs.length; i++) {
+  let input = quantityInputs[i];
+  input.addEventListener("change", quantityChanged);
+}
+
+// Supporting Code / Callback Functions
+
 function removeCartItem(event) {
   let buttonClicked = event.target;
   buttonClicked.parentElement.parentElement.remove();
   updatedCartTotal();
 }
 
+function quantityChanged(event) {
+  let input = event.target;
+  if (isNaN(input.value) || input.value <= 0) {
+    input.value = 1;
+  }
+  updatedCartTotal();
+}
+
 // Update Total Cost
+
 function updatedCartTotal() {
   let cartItemContainer = document.getElementsByClassName("cart-items")[0];
   let cartRows = cartItemContainer.getElementsByClassName("cart-row");
