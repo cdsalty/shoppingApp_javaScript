@@ -7,11 +7,17 @@ const removeCartItemButtons = document.querySelectorAll(".btn-danger");
 
 for (let i = 0; i < removeCartItemButtons.length; i++) {
   let button = removeCartItemButtons[i];
-  button.addEventListener("click", function(event) {
+  button.addEventListener("click", removeCartItem);
+  /* {
     let buttonClicked = event.target;
     buttonClicked.parentElement.parentElement.remove();
     updatedCartTotal();
-  });
+  });*/
+}
+function removeCartItem(event) {
+  let buttonClicked = event.target;
+  buttonClicked.parentElement.parentElement.remove();
+  updatedCartTotal();
 }
 
 // Update Total Cost
