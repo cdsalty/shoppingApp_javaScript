@@ -30,12 +30,14 @@ function updatedCartTotal() {
   // go through each row in the cart, select the first element in the array of elements
   let cartItemContainer = document.getElementsByClassName("cart-items")[0]; // each row is inside the cart-item class
   let cartRows = cartItemContainer.getElementsByClassName("cart-row"); // get the elements that have a class name of of cart-row
+  // define cartRow and initialze the starting value
+  let total = 0;
   // loop over the cart rows
   for (let i = 0; i < cartRows.length; i++) {
     // assign varaible to the cartRow iteration
     let cartRow = cartRows[i];
     // will need to get cart price that has a class of 'cart-price' and the first one listed
-    // or I thought of as...
+    // or the way I thought of it was...
     // on each cartRow get the class of cart-price and access the first element; priceElement = the $9.99 input in html
     let priceElement = cartRow.getElementsByClassName("cart-price")[0];
     // get quanity by assigning variable to cart-quanity-level class
@@ -43,16 +45,26 @@ function updatedCartTotal() {
       "cart-quantity-input"
     )[0];
     /* 
-    STEPS: (to retrieve the number being entered such as 9.99 from the HTML doc)
-      - assign a variable to the price elemnent in the HTML
-      - remove '$' from '$9.99' -- replace()
-      - change the innerText of 9.99 from a string to a number -- parseFloat()
+    Next Step: Retreive the number entered and update the value
+    To retrieve the number being entered such as 9.99 from the HTML doc: 
+      - assign a variable to the price elemnent in the HTML     ** 'price' **
+      - remove '$' from '$9.99'       ** by using the replace() method **
+      - change the innerText of 9.99 from a string to a number ** parseFloat()  **
       - limit the decimal positions to two.
+          - Now, set the 'Total' price to to update
+            - get the cart-total-price element's value 
+            - update the cart value with the $ 
+
     */
     let price = parseFloat(priceElement.innerText.replace("$", ""));
-    console.log(price);
     let quanity = quanityElement.value;
-    console.log(quanity);
-    console.log(price * quanity);
+    // total = total + (price  *  quanity)
+    total = total + price * quanity; // will take place each time through the loop.
+    //  ** must initalize total and set starting value to 0 ** I OVERLOOKED THIS ! ! ! ! !
+
+    console.log(total + price * quanity);
+    // refer back to the html to determine we need to target the class, "cart-total-price"
   }
+  document.getElementsByClassName("cart-total-price")[0].innerText =
+    "$" + total;
 }

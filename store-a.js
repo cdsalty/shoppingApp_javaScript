@@ -18,17 +18,16 @@ for (let i = 0; i < removeCartItemButtons.length; i++) {
 function updatedCartTotal() {
   let cartItemContainer = document.getElementsByClassName("cart-items")[0];
   let cartRows = cartItemContainer.getElementsByClassName("cart-row");
-
+  let total = 0;
   for (let i = 0; i < cartRows.length; i++) {
     let cartRow = cartRows[i];
     let priceElement = cartRow.getElementsByClassName("cart-price")[0];
     let quanityElement = cartRow.getElementsByClassName(
       "cart-quantity-input"
     )[0];
-    console.log(quanityElement.value);
     let price = parseFloat(priceElement.innerText.replace("$", ""));
-    // console.log(price);
-    let quantity = quanityElement.value;
-    console.log(price * quantity);
+    let quanity = quanityElement.value;
+    total = total + price * quanity;
   }
+  document.querySelectorAll(".cart-total-price")[0].innerText = "$" + total;
 }
