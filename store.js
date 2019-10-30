@@ -58,15 +58,71 @@ function quantityChanged(event) {
   updatedCartTotal();
 }
 
-// Defining addClickToCart where it's being called in the addToCartButtons event listener
+// Defining addClickToCart
 function addClickToCart(event) {
   let button = event.target; // connect to the event.target which is the actually button being clicked
   // work on getting the HTML DATA in order to display when an item is clicked to add to the cart
   // FIRST, We need the parent element of the entire div
-  let shopItem = button.parentElement.parentElement; // the button's grandparents
-  // Now I can get the correct information in/of the HTML to render correctly.
-  let title = shopItem.querySelectorAll(".shop-item-title")[0].innerText; // NOT DOCUMENT BUT sHOPiTEM!
-  console.log(title); // YEA BABY!
+  let shopItem = button.parentElement.parentElement; // gives us access to the entire div to access within
+  // use shopItem to spefically call on the div classes within -> THE title, price and image
+  let title = shopItem.querySelectorAll(".shop-item-title")[0].innerText; // NOT DOCUMENT but * SHOPITEM * !
+  let price = shopItem.querySelectorAll(".shop-item-price")[0].innerText;
+  // for the image, you need to call the src attribute because an image does not have innerText
+  let imageSrc = shopItem.querySelectorAll(".shop-item-image")[0].src;
+  console.log(title, price, imageSrc); // YEA
+  addItemToCart(title, price, imageSrc); // Next, define addItemToCart
+}
+
+function addItemToCart(title, price, imageSrc) {
+  // First we need to C R E A T E  a <DIV> we can append to0
+  const cartRow = document.createElement("div"); // DIV is CREATED but not called or invoked.
+
+  // To get the propert styling and layout, we need to assign cartRow the class of 'cart-row'
+  cartRow.classList.add("cart-row"); // cartRow class = 'cart-row'
+
+  // cartRow.innerText = title; but instead of setting the title HERE, instead we will set to cartRowContents accordingly
+
+  // CART-ITEMS IS WHERE ALL THE 'CART-ROWS' LIVE (all cart-rows are under cart-items)
+  const cartItems = document.querySelectorAll(".cart-items")[0];
+  // take the cart-items and append the new cartRow
+
+  // To Prevent duplicate items being added to the cart
+  let cartItemNames = cartItems.querySelectorAll(".cart-item-title");
+  for (let i = 0; i < cartItemNames.length; i++) {
+    if (cartItemNames[i].innerText == title) {
+      alert(
+        `You already have ${title} in your cart. If you want more than one item, please adjust your quantity in your cart. Thanks.`
+      );
+      return;
+    }
+  }
+
+  // Next, we need to do the actually adding of the element and it's stlying
+  // take the html directly from store page(everything inside 'cart-row') and use this to generate a cart-row of the items added to the cart
+  // lastly go and change src="${imageSrc}" and the other variables passed in.
+  let cartRowContents = `
+      <div class="cart-item cart-column">
+        <img
+          class="cart-item-image"
+          src="${imageSrc}"
+          alt="T-Shirt"
+          width="100"
+          height="100"
+        />
+
+        <h3 class="cart-item-title">${title}</h3>
+      </div>
+
+      <span class="cart-price cart-column">${price}</span>
+
+      <div class="cart-quantity cart-column">
+        <input class="cart-quantity-input" type="number" value="1" />
+        <button class="btn btn-danger" type="button">REMOVE</button>
+      </div>`;
+
+  cartRow.innerHTML = cartRowContents; // now the cart-row is being rendered correctly (but text will change)
+  cartItems.append(cartRow); // WHY CARTROW AND NOT CARTROWCONTENTS?????????????????????
+  // updatedCartTotal();
 }
 
 // Update Total Cost
@@ -98,7 +154,6 @@ function updatedCartTotal() {
           - Now, set the 'Total' price to to update
             - get the cart-total-price element's value 
             - update the cart value with the $ 
-
     */
     let price = parseFloat(priceElement.innerText.replace("$", ""));
     let quanity = quanityElement.value;
