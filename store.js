@@ -122,7 +122,17 @@ function addItemToCart(title, price, imageSrc) {
 
   cartRow.innerHTML = cartRowContents; // now the cart-row is being rendered correctly (but text will change)
   cartItems.append(cartRow); // WHY CARTROW AND NOT CARTROWCONTENTS?????????????????????
-  // updatedCartTotal();
+  /* 
+  *** In order for the quantity and remove buttons to work/function correctly, we need to directly add
+  and event listener on to each new button and quantity box rendered.
+  AS SO:              
+  */
+  cartRow
+    .querySelectorAll(".btn-danger")[0]
+    .addEventListener("click", removeCartItem);
+  cartRow
+    .querySelectorAll(".cart-quantity-input")[0]
+    .addEventListener("change", quantityChanged);
 }
 
 // Update Total Cost

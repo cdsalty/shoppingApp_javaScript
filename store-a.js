@@ -1,6 +1,6 @@
 console.log("SUCCINCT MODE - Straight Forward Code");
 
-// Remove Button
+// REMOVE BUTTON
 const removeCartItemButtons = document.querySelectorAll(".btn-danger");
 for (let i = 0; i < removeCartItemButtons.length; i++) {
   let button = removeCartItemButtons[i];
@@ -12,14 +12,14 @@ for (let i = 0; i < removeCartItemButtons.length; i++) {
   });*/
 }
 
-// Quantity Input Box
+// QUANTITY INPUT BOX
 const quantityInputs = document.querySelectorAll(".cart-quantity-input");
 for (let i = 0; i < quantityInputs.length; i++) {
   let input = quantityInputs[i];
   input.addEventListener("change", quantityChanged);
 }
 
-// Add To Cart Buttons
+// ADD TO CART BUTTON(S)
 const addToCartButtons = document.querySelectorAll(".shop-item-button");
 for (let i = 0; i <= addToCartButtons.length; i++) {
   let button = addToCartButtons[i];
@@ -50,6 +50,7 @@ function addClickToCart(event) {
   let imageSrc = shopItems.querySelectorAll(".shop-item-image")[0].src;
   console.log(title, price, imageSrc);
   addItemToCart(title, price, imageSrc);
+  updatedCartTotal();
 }
 
 function addItemToCart(title, price, imageSrc) {
@@ -85,8 +86,15 @@ function addItemToCart(title, price, imageSrc) {
         <input class="cart-quantity-input" type="number" value="1" />
         <button class="btn btn-danger" type="button">REMOVE</button>
       </div>`;
-  cartRow.innerHTML = cartRowContents;
-  cartItems.append(cartRow); // why cartRow and not cartRowContents
+  cartRow.innerHTML = cartRowContents; // not assigning cartRow but the cartRow's 'innerHTML' is getting assigned
+  cartItems.append(cartRow);
+  // add on eventListeners
+  cartRow
+    .querySelectorAll(".btn-danger")[0]
+    .addEventListener("click", removeCartItem);
+  cartRow
+    .querySelectorAll(".cart-quantity-input")[0]
+    .addEventListener("change", quantityChanged);
 }
 
 // Update Total Cost
