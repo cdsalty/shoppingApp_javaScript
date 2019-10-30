@@ -1,10 +1,7 @@
-/*
-Succinct Mode
-*/
+console.log("SUCCINCT MODE - Straight Forward Code");
 
 // Remove Button
 const removeCartItemButtons = document.querySelectorAll(".btn-danger");
-
 for (let i = 0; i < removeCartItemButtons.length; i++) {
   let button = removeCartItemButtons[i];
   button.addEventListener("click", removeCartItem);
@@ -17,13 +14,19 @@ for (let i = 0; i < removeCartItemButtons.length; i++) {
 
 // Quantity Input Box
 const quantityInputs = document.querySelectorAll(".cart-quantity-input");
-
 for (let i = 0; i < quantityInputs.length; i++) {
   let input = quantityInputs[i];
   input.addEventListener("change", quantityChanged);
 }
 
-// Supporting Code / Callback Functions
+// Add To Cart Buttons
+const addToCartButtons = document.querySelectorAll(".shop-item-button");
+for (let i = 0; i <= addToCartButtons.length; i++) {
+  let button = addToCartButtons[i];
+  button.addEventListener("click", addClickToCart);
+}
+
+// Callback Functions
 
 function removeCartItem(event) {
   let buttonClicked = event.target;
@@ -39,8 +42,14 @@ function quantityChanged(event) {
   updatedCartTotal();
 }
 
-// Update Total Cost
+function addClickToCart(event) {
+  let button = event.target;
+  let shopItems = button.parentElement.parentElement;
+  let title = shopItems.querySelectorAll(".shop-item-title")[0].innerText;
+  console.log(title);
+}
 
+// Update Total Cost
 function updatedCartTotal() {
   let cartItemContainer = document.getElementsByClassName("cart-items")[0];
   let cartRows = cartItemContainer.getElementsByClassName("cart-row");
@@ -55,5 +64,6 @@ function updatedCartTotal() {
     let quanity = quanityElement.value;
     total = total + price * quanity;
   }
+  total = Math.floor(total * 100) / 100; // rounds total to two decimal places only
   document.querySelectorAll(".cart-total-price")[0].innerText = "$" + total;
 }

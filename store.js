@@ -32,6 +32,13 @@ for (let i = 0; i < quantityInputs.length; i++) {
   // now go and define what actions will take place when quantityChanged is called
 }
 
+// ADD TO CART BUTTONS
+const addToCartButtons = document.querySelectorAll(".shop-item-button");
+for (let i = 0; i <= addToCartButtons.length; i++) {
+  let button = addToCartButtons[i];
+  button.addEventListener("click", addClickToCart);
+}
+
 // 3rd Step Taken: Cleaning up the code by creating a removeCartItem Function
 // replaced the original code on the event listner into this function.
 function removeCartItem(event) {
@@ -49,6 +56,17 @@ function quantityChanged(event) {
     input.value = 1;
   }
   updatedCartTotal();
+}
+
+// Defining addClickToCart where it's being called in the addToCartButtons event listener
+function addClickToCart(event) {
+  let button = event.target; // connect to the event.target which is the actually button being clicked
+  // work on getting the HTML DATA in order to display when an item is clicked to add to the cart
+  // FIRST, We need the parent element of the entire div
+  let shopItem = button.parentElement.parentElement; // the button's grandparents
+  // Now I can get the correct information in/of the HTML to render correctly.
+  let title = shopItem.querySelectorAll(".shop-item-title")[0].innerText; // NOT DOCUMENT BUT sHOPiTEM!
+  console.log(title); // YEA BABY!
 }
 
 // Update Total Cost
@@ -86,11 +104,17 @@ function updatedCartTotal() {
     let quanity = quanityElement.value;
     // total = total + (price  *  quanity)
     total = total + price * quanity; // will take place each time through the loop.
+
     //  ** must initalize total and set starting value to 0 ** I OVERLOOKED THIS ! ! ! ! !
     console.log(
       `Just removed ${total + price * quanity} from the shopping cart.`
     );
   }
+  // TO make the total price ONLY have two decimal places. GOOD FACT TO REMEMBER
+  // round the number using Math.round(), multiply by 100 and then divide by 100
+  total = Math.round(total * 100) / 100;
+  console.log(`The newly updated total is now: ${total}`);
+
   // refered back to the html to determine we need to target the class, "cart-total-price"
   document.getElementsByClassName("cart-total-price")[0].innerText =
     "$" + total;
