@@ -9,6 +9,9 @@
 
 */
 
+
+THIS IS NOT UPDATED FOR THE PURCHASE BUTTON BUT LEAVING FOR NOTES TO REVIEW.
+
 // BUTTONS/INPUTS: REMOVE, QUANTITY INPUT BOX,
 
 // Remove Button
@@ -63,14 +66,15 @@ function addClickToCart(event) {
   let button = event.target; // connect to the event.target which is the actually button being clicked
   // work on getting the HTML DATA in order to display when an item is clicked to add to the cart
   // FIRST, We need the parent element of the entire div
-  let shopItem = button.parentElement.parentElement; // gives us access to the entire div to access within
-  // use shopItem to spefically call on the div classes within -> THE title, price and image
-  let title = shopItem.querySelectorAll(".shop-item-title")[0].innerText; // NOT DOCUMENT but * SHOPITEM * !
-  let price = shopItem.querySelectorAll(".shop-item-price")[0].innerText;
+  let shopItems = button.parentElement.parentElement; // gives us access to the entire div to access within
+  // use shopItems to spefically call on the div classes within -> THE title, price and image
+  let title = shopItems.querySelectorAll(".shop-item-title")[0].innerText; // NOT DOCUMENT but * SHOPITEM * !
+  let price = shopItems.querySelectorAll(".shop-item-price")[0].innerText;
   // for the image, you need to call the src attribute because an image does not have innerText
-  let imageSrc = shopItem.querySelectorAll(".shop-item-image")[0].src;
+  let imageSrc = shopItems.querySelectorAll(".shop-item-image")[0].src;
   console.log(title, price, imageSrc); // YEA
   addItemToCart(title, price, imageSrc); // Next, define addItemToCart
+  updatedCartTotal(); // update the cart's total
 }
 
 function addItemToCart(title, price, imageSrc) {
@@ -184,3 +188,7 @@ function updatedCartTotal() {
   document.getElementsByClassName("cart-total-price")[0].innerText =
     "$" + total;
 }
+
+
+
+THIS IS NOT UPDATED FOR THE PURCHASE BUTTON BUT LEAVING FOR NOTES TO REVIEW.
