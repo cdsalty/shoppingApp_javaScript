@@ -1,4 +1,4 @@
-console.log("SUCCINCT MODE - Straight Forward Code");
+console.log("SUCCINCT MODE - Straight Forward Code:ES6 Syntax");
 if (document.readyState == "loading") {
   document.addEventListener("DOMContentLoaded", ready);
 } else {
@@ -7,36 +7,27 @@ if (document.readyState == "loading") {
 
 function ready() {
   // REMOVE BUTTON
-  const removeCartItemButtons = document.getElementsByClassName("btn-danger");
-  for (let i = 0; i < removeCartItemButtons.length; i++) {
-    let button = removeCartItemButtons[i];
+  const removeCartItemButtons = document.querySelectorAll(".btn-danger");
+  removeCartItemButtons.forEach(button => {
     button.addEventListener("click", removeCartItem);
-    // button.addEventListener("click", function(event) {
-    /* {
-      let button = event.target;
-      button.parentElement.parentElement.remove();
-      updateCartTotal();
-      });
-    */
-  }
-
-  // QUANTITY-INPUT-BOX
-  const quantityInputs = document.getElementsByClassName("cart-quantity-input");
-  for (let i = 0; i < quantityInputs.length; i++) {
-    let input = quantityInputs[i];
-    input.addEventListener("change", quantityChanged);
-  }
-
-  // ADD TO CART BUTTON(S)
-  const addToCartButtons = document.getElementsByClassName("shop-item-button");
-  for (let i = 0; i < addToCartButtons.length; i++) {
-    let button = addToCartButtons[i];
-    button.addEventListener("click", addToCartClicked);
-  }
-  document
-    .getElementsByClassName("btn-purchase")[0]
-    .addEventListener("click", purchaseClicked);
+  });
 }
+
+// QUANTITY-INPUT-BOX
+const quantityInputs = document.querySelectorAll(".cart-quantity-input");
+quantityInputs.forEach(input => {
+  input.addEventListener("change", quantityChanged);
+});
+
+// ADD TO CART BUTTON(S)
+const addToCartButtons = document.querySelectorAll(".shop-item-button");
+addToCartButtons.forEach(button => {
+  button.addEventListener("click", addToCartClicked);
+});
+
+document
+  .querySelector(".btn-purchase")
+  .addEventListener("click", purchaseClicked);
 
 // Callback Functions
 
@@ -44,7 +35,9 @@ function purchaseClicked() {
   alert(
     "Thank you for your purchase. Your business is appreciated and we hope to see you again soon!"
   );
-  let cartItems = document.getElementsByClassName("cart-items")[0];
+  // Changed from [0] to querySelector
+  // let cartItems = document.getElementsByClassName("cart-items")[0];
+  let cartItems = document.querySelector(".cart-items");
   while (cartItems.hasChildNodes()) {
     cartItems.removeChild(cartItems.firstChild);
   }
@@ -68,9 +61,9 @@ function quantityChanged(event) {
 function addToCartClicked(event) {
   let button = event.target;
   let shopItem = button.parentElement.parentElement;
-  let title = shopItem.getElementsByClassName("shop-item-title")[0].innerText;
-  let price = shopItem.getElementsByClassName("shop-item-price")[0].innerText;
-  let imageSrc = shopItem.getElementsByClassName("shop-item-image")[0].src;
+  let title = shopItem.querySelector(".shop-item-title").innerText;
+  let price = shopItem.querySelector(".shop-item-price").innerText;
+  let imageSrc = shopItem.querySelector(".shop-item-image").src;
   //   console.log(title, price, imageSrc);
   addItemToCart(title, price, imageSrc);
   updateCartTotal();
