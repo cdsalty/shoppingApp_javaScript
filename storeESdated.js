@@ -7,8 +7,8 @@ if (document.readyState == "loading") {
 
 function ready() {
   // REMOVE BUTTON
-  const removeCartItemButtons = document.querySelectorAll(".btn-danger");
-  removeCartItemButtons.forEach(button => {
+  const removeButtons = document.querySelectorAll(".btn-danger");
+  removeButtons.forEach(button => {
     button.addEventListener("click", removeCartItem);
   });
 }
@@ -17,6 +17,14 @@ function ready() {
 const quantityInputs = document.querySelectorAll(".cart-quantity-input");
 quantityInputs.forEach(input => {
   input.addEventListener("change", quantityChanged);
+});
+
+document.addEventListener("click", event => {
+  // VERY GOOD TO REMEMBER FOR USING .MATCHES()
+  // console.log(event.target.matches(".btn-danger")); // will return a true or false depending on if the button 'btn-danger' is clicked
+  if (event.target.matches(".btn-danger")) {
+    removeCartItem(event);
+  }
 });
 
 // ADD TO CART BUTTON(S)
@@ -38,9 +46,10 @@ function purchaseClicked() {
   // Changed from [0] to querySelector
   // let cartItems = document.getElementsByClassName("cart-items")[0];
   let cartItems = document.querySelector(".cart-items");
-  while (cartItems.hasChildNodes()) {
-    cartItems.removeChild(cartItems.firstChild);
-  }
+  cartItems.innerHTML = "";
+  // while (cartItems.hasChildNodes()) {
+  //   cartItems.removeChild(cartItems.firstChild);
+  // }
   updateCartTotal();
 }
 
@@ -72,7 +81,7 @@ function addToCartClicked(event) {
 function addItemToCart(title, price, imageSrc) {
   const cartRow = document.createElement("div");
   cartRow.classList.add("cart-row"); // for proper styling when added to cart
-  let cartItems = document.querySelectorAll(".cart-items")[0];
+  let cartItems = document.querySelector(".cart-items");
   // To prevent more than one of the same item added to the cart
   let cartItemNames = cartItems.querySelectorAll(".cart-item-title");
   for (let i = 0; i < cartItemNames.length; i++) {
@@ -106,9 +115,9 @@ function addItemToCart(title, price, imageSrc) {
   cartRow.innerHTML = cartRowContents; // not assigning cartRow; assigning the cartRow's 'innerHTML'
   cartItems.append(cartRow);
   // add on eventListeners
-  cartRow
-    .querySelectorAll(".btn-danger")[0]
-    .addEventListener("click", removeCartItem);
+  // cartRow        ** THESE WERE REMOVED AND REPLACED WITH DOCUMENT.EVENTLISTENERS. SEE 'DOCUMENT.ADDEVENTLISTER FUNCTION
+  //   .querySelectorAll(".btn-danger")[0]
+  //   .addEventListener("click", removeCartItem);
   cartRow
     .querySelectorAll(".cart-quantity-input")[0]
     .addEventListener("change", quantityChanged);
@@ -116,7 +125,7 @@ function addItemToCart(title, price, imageSrc) {
 
 // Update Total Cost
 function updateCartTotal() {
-  let cartItemContainer = document.getElementsByClassName("cart-items")[0];
+  let cartItemContainer = document.querySelector(".cart-items");
   let cartRows = cartItemContainer.getElementsByClassName("cart-row");
   let total = 0;
   for (let i = 0; i < cartRows.length; i++) {

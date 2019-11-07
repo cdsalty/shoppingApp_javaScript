@@ -1,0 +1,17 @@
+
+* First time using the match() function which returns a true or false arguement
+document.addEventListener("click", event => {
+  // VERY GOOD TO REMEMBER FOR USING .MATCHES()
+  console.log(event.target.matches(".btn-danger")); // will return a true or false depending on if the button 'btn-danger' is clicked
+});
+document.addEventListener("click", event => {
+  if (event.target.matches(".btn-danger")) {
+    removeCaftItem(event);
+  }
+});
+
+____________________________________________________________________________________________________________
+getElementsByClaseName - can't use a forEach loop however if you use querySelectorAll, you can make use
+of the forEach loop.
+____________________________________________________________________________________________________________
+5  5  0  7
